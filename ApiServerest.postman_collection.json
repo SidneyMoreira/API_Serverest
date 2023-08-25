@@ -238,7 +238,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"nome\": \"Laura Maria\",\n    \"email\": \"laurasousa@hotmail.fr\",\n    \"password\": \"U4vkyRsQtW1sBlX\",\n    \"administrador\": \"true\"\n}",
+							"raw": "{\n    \"nome\": \"Laura Maria\",\n    \"email\": {{Mail}},\n    \"password\": \"{{Password}}\",\n    \"administrador\": \"true\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
