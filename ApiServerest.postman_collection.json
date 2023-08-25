@@ -1,0 +1,889 @@
+{
+	"info": {
+		"_postman_id": "d65209d2-59d8-4b3e-a312-e0b5a47701d7",
+		"name": "Api Serverest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11126906"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Cadastro",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"Cadastro de Usuário\", function () {",
+									"        pm.expect(pm.variables.get(\"MESSAGE_ADD_SUCCESS\")).to.eql(JSON.parse(responseBody).message);",
+									"});",
+									"",
+									"pm.test(\"ID is TRUE\", function(){",
+									"    pm.expect(JSON.parse(responseBody)._id).is.exist",
+									"})",
+									"",
+									"pm.environment.set(\"ID_User\",pm.variables.replaceIn(JSON.parse(responseBody)._id));",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"function firstName(){",
+									"",
+									"    var firstName = [\"Maria\",\"João\",\"Ana\",\"Pedro\",\"Carla\",\"Lucas\",\"Mariana\",\"Paulo\",\"Camila\",\"Rafael\",\"Juliana\",\"Gustavo\",\"Larissa\",\"Fernando\",\"Amanda\",\"Diego\",\"Isabela\",\"Ricardo\",\"Natália\",\"Henrique\",\"Lívia\",\"Roberto\",\"Sofia\",\"Eduardo\",\"Vitória\",\"Fábio\",\"Mariana\",\"André\",\"Letícia\",\"Rodrigo\",\"Lara\",\"Guilherme\",\"Bianca\",\"Miguel\",\"Alice\",\"Leonardo\",\"Laura\",\"Daniel\",\"Beatriz\",\"Felipe\",\"Luiza\",\"Arthur\",\"Helena\",\"Gabriel\",\"Valentina\",\"Bernardo\",\"Sophia\",\"Vitor\",\"Clara\",\"Francisco\",\"Yasmin\",\"Enzo\",\"Isabel\",\"Isabella\",\"Lorenzo\",\"Joana\",\"Samuel\",\"Melissa\",\"Otávio\",\"Ana\",\"Breno\",\"Cecília\",\"Benjamin\",\"Luana\",\"Mariane\",\"Davi\",\"Nathália\",\"Raul\",\"Isadora\",\"Marcelo\",\"Luna\",\"Nicolas\",\"Laís\",\"Augusto\",\"Stella\",\"Ruan\",\"Gabriela\",\"Luciano\",\"Evelyn\",\"Thiago\",\"Lorena\",\"Vinícius\",\"Catarina\",\"Murilo\",\"Pietra\",\"Tomás\",\"Carolina\",\"Caio\",\"Manuela\",\"Emanuelly\",\"Lavinia\",\"Lucca\",\"Mirella\",\"Kevin\",\"Rebeca\",\"Anthony\",\"Júlia\"];",
+									"    var randomItem = firstName[Math.floor(Math.random() * firstName.length)];",
+									"",
+									"    return randomItem;",
+									"}",
+									"",
+									"function lastName(){",
+									"",
+									"    var lastName = [\"Silva\",\"Santos\",\"Oliveira\",\"Souza\",\"Rodrigues\",\"Almeida\",\"Costa\",\"Pereira\",\"Carvalho\",\"Ferreira\",\"Gomes\",\"Martins\",\"Rocha\",\"Ribeiro\",\"Alves\",\"Lima\",\"Sousa\",\"Fernandes\",\"Pinto\",\"Cunha\",\"Mendes\",\"Barbosa\",\"Saraiva\",\"Machado\",\"Cardoso\",\"Nogueira\",\"Ramos\",\"Coelho\",\"Araújo\",\"Castro\",\"Fonseca\",\"Rocha\",\"Moreira\",\"Figueiredo\",\"Gonçalves\",\"Monteiro\",\"Marques\",\"Peixoto\",\"Morais\",\"Lopes\",\"Vieira\",\"Tavares\",\"Correia\",\"Neves\",\"Nunes\",\"Cavalcanti\",\"Andrade\",\"Freitas\",\"Coutinho\",\"Rezende\",\"Macedo\",\"Borges\",\"Barros\",\"Melo\",\"Barbosa\",\"Campos\",\"Lemos\",\"Braga\",\"Teixeira\",\"Dias\",\"Albuquerque\",\"Sampaio\",\"Moura\",\"Rocha\",\"Silveira\",\"Aguiar\",\"Abreu\",\"Lima\",\"Pacheco\",\"Vargas\",\"Farias\",\"Moraes\",\"Ferreira\",\"Gusmão\",\"Sousa\",\"Azevedo\",\"Dantas\",\"Cavalcante\",\"Batista\",\"Peixoto\",\"Pires\",\"Leite\",\"Ramos\",\"Macedo\",\"Sales\",\"Carneiro\",\"Monteiro\",\"Goulart\",\"Cruz\",\"Fialho\",\"Xavier\",\"Prado\",\"Valente\",\"Furtado\",\"Vieira\"];",
+									"    var randomItem = lastName[Math.floor(Math.random() * lastName.length)];",
+									"",
+									"    return randomItem;",
+									"}",
+									"",
+									"function domain(){",
+									"",
+									"    var domain = [\"@gmail.com\",\"@hotmail.com\",\"@yahoo.com\",\"@outlook.com\",\"@aol.com\",\"@icloud.com\",\"@protonmail.com\",\"@gmx.com\",\"@mail.com\",\"@zoho.com\",\"@yandex.com\",\"@live.com\",\"@rocketmail.com\",\"@fastmail.com\",\"@tutanota.com\",\"@inbox.com\",\"@me.com\",\"@rediffmail.com\",\"@sbcglobal.net\",\"@cox.net\",\"@yahoo.co.uk\",\"@att.net\",\"@mail.ru\",\"@optonline.net\",\"@ymail.com\",\"@outlook.com.br\",\"@live.com.mx\",\"@gmx.de\",\"@web.de\",\"@yahoo.com.br\",\"@yandex.ru\",\"@hotmail.fr\",\"@hotmail.co.uk\",\"@yahoo.fr\",\"@outlook.es\",\"@mail.ru\",\"@orange.fr\",\"@libero.it\",\"@hotmail.it\",\"@yahoo.it\",\"@o2.pl\",\"@wp.pl\",\"@interia.pl\",\"@onet.pl\",\"@seznam.cz\",\"@abv.bg\",\"@gmx.at\",\"@gmx.ch\",\"@bluewin.ch\",\"@inbox.lv\",\"@rambler.ru\",\"@mail.bg\",\"@yahoo.ca\",\"@hotmail.ca\",\"@bell.net\",\"@hotmail.com.au\",\"@yahoo.com.au\",\"@t-online.de\",\"@arcor.de\",\"@cox.net\",\"@verizon.net\",\"@yahoo.de\",\"@hotmail.de\",\"@wanadoo.fr\",\"@live.fr\",\"@gmx.fr\",\"@mail.be\",\"@telenet.be\",\"@hotmail.be\",\"@yahoo.co.in\",\"@live.in\",\"@rediffmail.com\",\"@hotmail.in\",\"@indiatimes.com\",\"@yahoo.co.id\",\"@hotmail.co.id\",\"@yahoo.com.sg\",\"@outlook.sg\",\"@hotmail.com.sg\",\"@yahoo.com.ph\",\"@yahoo.com.vn\",\"@yahoo.com.ar\",\"@yahoo.com.mx\",\"@yahoo.com.co\",\"@yahoo.com.pe\",\"@yahoo.com.ve\",\"@yahoo.com.ec\",\"@yahoo.com.bo\",\"@yahoo.com.gt\",\"@yahoo.com.do\",\"@yahoo.com.pa\",\"@yahoo.com.hk\",\"@yahoo.com.tw\",\"@yahoo.com.cn\",\"@yahoo.co.jp\",\"@yahoo.co.kr\",\"@yahoo.co.th\",\"@yahoo.com.my\",\"@yahoo.com.sa\",\"@yahoo.ae\",\"@yahoo.co.il\",\"@yahoo.com.tr\",\"@yahoo.com.eg\",\"@yahoo.com.ng\",\"@yahoo.co.za\",\"@yahoo.com.au\",\"@yahoo.com.nz\",\"@yahoo.com.ph\",\"@yahoo.com.vn\"];",
+									"    var randomItem = domain[Math.floor(Math.random() * domain.length)];",
+									"",
+									"    return randomItem;",
+									"}",
+									"",
+									"pm.environment.set(\"Name\", firstName() +\" \" + lastName());",
+									"pm.environment.set(\"Domain\", domain());",
+									"",
+									"function mail(){",
+									"    var user = pm.variables.get(\"Name\").toLowerCase().replace(/\\s/g, \"\").normalize(\"NFD\").replace(/[\\u0300-\\u036f]/g, \"\")",
+									"    var mail = user+pm.variables.get(\"Domain\");",
+									"    return mail;",
+									"}",
+									"",
+									"pm.environment.set(\"Mail\", mail());",
+									"pm.environment.set(\"Password\", pm.variables.replaceIn('{{$randomPassword}}'))",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nome\": \"{{Name}}\",\n  \"email\": \"{{Mail}}\",\n  \"password\": \"{{Password}}\",\n  \"administrador\": \"true\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/usuarios",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consulta User ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Dados retornados\", function(){",
+									"    pm.expect(JSON.parse(responseBody).nome).is.exist",
+									"    pm.expect(JSON.parse(responseBody).email).is.exist",
+									"    pm.expect(JSON.parse(responseBody).password).is.exist",
+									"    pm.expect(JSON.parse(responseBody).administrador).is.exist",
+									"    pm.expect(pm.variables.get(\"ID_User\")).to.eql(JSON.parse(responseBody)._id);",
+									"})",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/usuarios/{{ID_User}}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"usuarios",
+								"{{ID_User}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List All User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Dados retornados\", function(){",
+									"    pm.expect(JSON.parse(responseBody).usuarios[0].nome).is.exist",
+									"    pm.expect(JSON.parse(responseBody).usuarios[0].email).is.exist",
+									"    pm.expect(JSON.parse(responseBody).usuarios[0].password).is.exist",
+									"    pm.expect(JSON.parse(responseBody).usuarios[0].administrador).is.exist",
+									"    pm.expect(JSON.parse(responseBody).usuarios[0]._id).is.exist",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/usuarios",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User ID",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const reqBody = JSON.parse(request.data);",
+									"const userID = pm.variables.get(\"ID_User\")",
+									"",
+									"const user_update = {",
+									"    url: 'https://serverest.dev/usuarios/'+userID,",
+									"    method: 'GET'",
+									"};",
+									"",
+									"pm.test('Status code is 200', function () {",
+									"    pm.response.to.have.status(200);",
+									"})",
+									"",
+									"pm.sendRequest(user_update, function (err, response) {",
+									"    var res = response.json();",
+									"",
+									"    pm.test(\"Dados retornados\", function () {",
+									"        pm.expect(reqBody.nome).to.eql(res.nome);",
+									"        pm.expect(reqBody.email).to.eql(res.email);",
+									"        pm.expect(reqBody.password).to.eql(res.password);",
+									"        pm.expect(reqBody.administrador).to.eql(res.administrador);",
+									"        pm.expect(pm.variables.get(\"ID_User\")).to.eql(res._id);",
+									"    })",
+									"})",
+									"",
+									"pm.test('Usuário Atualizado', function () {",
+									"    pm.expect(pm.variables.get('MESSAGE_ALTERED_SUCCESS')).to.eql(JSON.parse(responseBody).message);",
+									"})",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nome\": \"Laura Maria\",\n    \"email\": \"laurasousa@hotmail.fr\",\n    \"password\": \"U4vkyRsQtW1sBlX\",\n    \"administrador\": \"true\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/usuarios/{{ID_User}}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"usuarios",
+								"{{ID_User}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Login",
+			"item": [
+				{
+					"name": "With Sucess",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"Token\",pm.variables.replaceIn(JSON.parse(responseBody).authorization));",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Usuário Logado\", function () {",
+									"        pm.expect(pm.variables.get(\"MESSAGE_LOGIN_SUCCESS\")).to.eql(JSON.parse(responseBody).message);",
+									"});",
+									"",
+									"pm.test(\"Token is TRUE\", function(){",
+									"    pm.expect(JSON.parse(responseBody).authorization).is.exist",
+									"})",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"{{Mail}}\",\n  \"password\": \"{{Password}}\"\n}\n\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/login",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Produtos",
+			"item": [
+				{
+					"name": "Cadastro",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"nameProduct\",pm.variables.replaceIn('{{$randomProductName}}'));",
+									"pm.environment.set(\"price\",pm.variables.replaceIn('{{$randomInt}}'));",
+									"pm.environment.set(\"description\",pm.variables.replaceIn('{{$randomLoremWords}}'));",
+									"pm.environment.set(\"quantity\",pm.variables.replaceIn('{{$randomInt}}'));"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"IdProduto\",pm.variables.replaceIn(JSON.parse(responseBody)._id));",
+									"",
+									"pm.test(\"Status code is 201 \", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"Produto Cadastrado\", function () {",
+									"        pm.expect(pm.variables.get(\"MESSAGE_ADD_SUCCESS\")).to.eql(JSON.parse(responseBody).message);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nome\": \"{{nameProduct}}\",\n  \"preco\": {{price}},\n  \"descricao\": \"{{description}}\",\n  \"quantidade\": {{quantity}}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/produtos",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"produtos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Busca por ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 \", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Produto Localizado\", function () {",
+									"        pm.expect(pm.variables.get(\"IdProduto\")).to.eql(JSON.parse(responseBody)._id);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/produtos/{{IdProduto}}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"produtos",
+								"{{IdProduto}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List All Products",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 \", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/produtos",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"produtos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update por ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 \", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Usuário Alterado\", function () {",
+									"        pm.expect(pm.variables.get(\"MESSAGE_REGISTER_ALTERED\")).to.eql(JSON.parse(responseBody).message);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nome\": \"{{nameProduct}}\",\n  \"preco\": {{price}},\n  \"descricao\": \"{{description}}\",\n  \"quantidade\": {{quantity}}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/produtos/{{IdProduto}}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"produtos",
+								"{{IdProduto}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Carrinho",
+			"item": [
+				{
+					"name": "Inserir Produto",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest(\"https://serverest.dev/produtos\", function (err, response) {",
+									"    var base = response.json();",
+									"    const listProduct = [];",
+									"",
+									"    for (let i = 0; i < base.produtos.length; i++) {",
+									"        listProduct.push(base.produtos[i]._id);",
+									"    }",
+									"",
+									"    function pegarID() {",
+									"        randomID = listProduct[Math.floor(Math.random() * listProduct.length)];",
+									"        return randomID;",
+									"    }",
+									"",
+									"    pm.environment.set(\"IdProdCar1\", pegarID());",
+									"    pm.environment.set(\"IdProdCar2\", pegarID());",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"IdCarrinho\",pm.variables.replaceIn(JSON.parse(responseBody)._id));",
+									"",
+									"pm.test(\"Status code is 201 \", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"Carrinho Cadastrado\", function () {",
+									"        pm.expect(pm.variables.get(\"MESSAGE_ADD_SUCCESS\")).to.eql(JSON.parse(responseBody).message);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"produtos\": [\n    {\n      \"idProduto\": \"{{IdProdCar1}}\",\n      \"quantidade\": 1\n    },\n    {\n      \"idProduto\": \"{{IdProdCar2}}\",\n      \"quantidade\": 1\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/carrinhos",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"carrinhos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Busca por ID",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 \", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Carrinho Encontrado\", function () {",
+									"        pm.expect(pm.variables.get(\"IdCarrinho\")).to.eql(JSON.parse(responseBody)._id);",
+									"});",
+									"",
+									"pm.test(\"Carrinho Pertencen ao usuário logado\", function () {",
+									"        pm.expect(pm.variables.get(\"ID_User\")).to.eql(JSON.parse(responseBody).idUsuario);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/carrinhos/{{IdCarrinho}}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"carrinhos",
+								"{{IdCarrinho}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List All Cars",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 \", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/carrinhos",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"carrinhos"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Limpeza Dados",
+			"item": [
+				{
+					"name": "Fechar Carrinho",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 \", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Carrinho Fechado\", function () {",
+									"        pm.expect(pm.variables.get(\"MESSAGE_DELETED_SUCCESS\")).to.eql(JSON.parse(responseBody).message);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/carrinhos/concluir-compra",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"carrinhos",
+								"concluir-compra"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete por ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 \", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Produto Deletado\", function () {",
+									"        pm.expect(pm.variables.get(\"MESSAGE_REGISTER_DELETED\")).to.eql(JSON.parse(responseBody).message);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/produtos/{{IdProduto}}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"produtos",
+								"{{IdProduto}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code is 200', function () {",
+									"    pm.response.to.have.status(200);",
+									"})",
+									"",
+									"pm.test('Usuário Deletado', function () {",
+									"    pm.expect(pm.variables.get('MESSAGE_DELETED_SUCCESS')).to.eql(JSON.parse(responseBody).message);",
+									"})",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/usuarios/{{ID_User}}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"usuarios",
+								"{{ID_User}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cancelar Carrinho",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 \", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Carrinho cancelado e produto estornado\", function () {",
+									"        pm.expect(pm.variables.get(\"MESSAGE_REGISTER_DELETED_REFUNDED_PRODUCTS\")).to.eql(JSON.parse(responseBody).message);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/carrinhos/cancelar-compra",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"carrinhos",
+								"cancelar-compra"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
