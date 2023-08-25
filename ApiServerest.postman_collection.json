@@ -238,7 +238,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"nome\": \"Laura Maria\",\n    \"email\": {{Mail}},\n    \"password\": \"{{Password}}\",\n    \"administrador\": \"true\"\n}",
+							"raw": "{\n    \"nome\": \"Sidney Moreira\",\n    \"email\": \"{{Mail}}\",\n    \"password\": \"{{Password}}\",\n    \"administrador\": \"true\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -309,6 +309,594 @@
 							],
 							"path": [
 								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Produtos",
+			"item": [
+				{
+					"name": "Cadastro",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"nameProduct\",pm.variables.replaceIn('{{$randomProductName}}'));",
+									"pm.environment.set(\"price\",pm.variables.replaceIn('{{$randomInt}}'));",
+									"pm.environment.set(\"description\",pm.variables.replaceIn('{{$randomLoremWords}}'));",
+									"pm.environment.set(\"quantity\",pm.variables.replaceIn('{{$randomInt}}'));"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"IdProduto\",pm.variables.replaceIn(JSON.parse(responseBody)._id));",
+									"",
+									"pm.test(\"Status code is 201 \", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"Produto Cadastrado\", function () {",
+									"        pm.expect(pm.variables.get(\"MESSAGE_ADD_SUCCESS\")).to.eql(JSON.parse(responseBody).message);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nome\": \"{{nameProduct}}\",\n  \"preco\": {{price}},\n  \"descricao\": \"{{description}}\",\n  \"quantidade\": {{quantity}}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/produtos",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"produtos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Busca por ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 \", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Produto Localizado\", function () {",
+									"        pm.expect(pm.variables.get(\"IdProduto\")).to.eql(JSON.parse(responseBody)._id);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/produtos/{{IdProduto}}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"produtos",
+								"{{IdProduto}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List All Products",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 \", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/produtos",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"produtos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update por ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 \", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Usuário Alterado\", function () {",
+									"        pm.expect(pm.variables.get(\"MESSAGE_REGISTER_ALTERED\")).to.eql(JSON.parse(responseBody).message);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nome\": \"{{nameProduct}}\",\n  \"preco\": 230,\n  \"descricao\": \"Produto com grande procura pelos clientes\",\n  \"quantidade\": 1000\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/produtos/{{IdProduto}}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"produtos",
+								"{{IdProduto}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Carrinho",
+			"item": [
+				{
+					"name": "Inserir Produto",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest(\"https://serverest.dev/produtos\", function (err, response) {",
+									"    var base = response.json();",
+									"    const listProduct = [];",
+									"",
+									"    for (let i = 0; i < base.produtos.length; i++) {",
+									"        listProduct.push(base.produtos[i]._id);",
+									"    }",
+									"",
+									"    function pegarID() {",
+									"        randomID = listProduct[Math.floor(Math.random() * listProduct.length)];",
+									"        return randomID;",
+									"    }",
+									"",
+									"    var id1 = pegarID();",
+									"    var id2 = pegarID();",
+									"    ",
+									"    if (id1 == id2){",
+									"        id1 = pegarID();",
+									"        id2 = pegarID();",
+									"    } else {",
+									"        console.log(id1, id2)",
+									"        pm.environment.set(\"IdProdCar1\", id1);",
+									"        pm.environment.set(\"IdProdCar2\", id2);",
+									"    }",
+									"",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"IdCarrinho\",pm.variables.replaceIn(JSON.parse(responseBody)._id));",
+									"",
+									"pm.test(\"Status code is 201 \", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"Carrinho Cadastrado\", function () {",
+									"        pm.expect(pm.variables.get(\"MESSAGE_ADD_SUCCESS\")).to.eql(JSON.parse(responseBody).message);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"produtos\": [\n    {\n      \"idProduto\": \"{{IdProdCar1}}\",\n      \"quantidade\": 1\n    },\n    {\n      \"idProduto\": \"{{IdProdCar2}}\",\n      \"quantidade\": 1\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/carrinhos",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"carrinhos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Busca por ID",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 \", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Carrinho Encontrado\", function () {",
+									"        pm.expect(pm.variables.get(\"IdCarrinho\")).to.eql(JSON.parse(responseBody)._id);",
+									"});",
+									"",
+									"pm.test(\"Carrinho Pertencen ao usuário logado\", function () {",
+									"        pm.expect(pm.variables.get(\"ID_User\")).to.eql(JSON.parse(responseBody).idUsuario);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/carrinhos/{{IdCarrinho}}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"carrinhos",
+								"{{IdCarrinho}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List All Cars",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 \", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/carrinhos",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"carrinhos"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Limpeza Dados",
+			"item": [
+				{
+					"name": "Fechar Carrinho",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 \", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Carrinho Fechado\", function () {",
+									"        pm.expect(pm.variables.get(\"MESSAGE_DELETED_SUCCESS\")).to.eql(JSON.parse(responseBody).message);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/carrinhos/concluir-compra",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"carrinhos",
+								"concluir-compra"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cancelar Carrinho",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 \", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Carrinho não encontrado para o Usuário\", function () {",
+									"        pm.expect(pm.variables.get(\"MESSAGE_CAR_NOT_FOUND\")).to.eql(JSON.parse(responseBody).message);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/carrinhos/cancelar-compra",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"carrinhos",
+								"cancelar-compra"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Produto por ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 \", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Produto Deletado\", function () {",
+									"        pm.expect(pm.variables.get(\"MESSAGE_DELETED_SUCCESS\")).to.eql(JSON.parse(responseBody).message);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/produtos/{{IdProduto}}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"produtos",
+								"{{IdProduto}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code is 200', function () {",
+									"    pm.response.to.have.status(200);",
+									"})",
+									"",
+									"pm.test('Usuário Deletado', function () {",
+									"    pm.expect(pm.variables.get('MESSAGE_DELETED_SUCCESS')).to.eql(JSON.parse(responseBody).message);",
+									"})",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/usuarios/{{ID_User}}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"usuarios",
+								"{{ID_User}}"
 							]
 						}
 					},
